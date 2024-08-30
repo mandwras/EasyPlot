@@ -1,0 +1,5 @@
+SN:004072031,Time,Celsius(°C),High Alarm,Low Alarm,Event,Serial Number
+1,2023-02-07 15:02:43,19.7,25.0,8.0,2,004072031
+
+
+
