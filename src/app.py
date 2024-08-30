@@ -1,0 +1,71 @@
+from flask import Flask, request, render_template, send_file
+import pandas as pd
+import matplotlib.pyplot as plt
+import io
+import os
+
+app = Flask(__name__)
+
+# Acceptable temperature ranges
+lower_bound = 18.0
+upper_bound = 22.0
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return "No file part", 400
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return "No selected file", 400
+    
+    if file:
+        try:
+            # Read the file into a DataFrame
+            df = pd.read_csv(file, encoding='latin1')
+            
+            # Print the first few rows of the DataFrame
+            # print(df.head())
+            # print(df.info())
+            
+            # Convert 'Celsius(C)' to numeric values
+            df['Celsius(C)'] = pd.to_numeric(df['Celsius(C)'], errors='coerce')
+            df['Time'] = pd.to_datetime(df['Time'], errors='coerce')
+
+            # Drop rows with NaN values
+            df = df.dropna()
+
+            # Check if the temperature is within the acceptable range
+            df['Within Range'] = df['Celsius(C)'].between(lower_bound, upper_bound)
+            
+            # Create the plot
+            plt.figure(figsize=(10, 6))
+            plt.plot(df['Time'], df['Celsius(C)'], label='Temperature', marker='o')
+            plt.fill_between(df['Time'], lower_bound, upper_bound, color='green', alpha=0.1, label='Acceptable Range')
+            plt.scatter(df['Time'][df['Within Range']], df['Celsius(C)'][df['Within Range']], color='green', label='Within Range')
+            plt.scatter(df['Time'][~df['Within Range']], df['Celsius(C)'][~df['Within Range']], color='red', label='Outside Range')
+            plt.xlabel('Time')
+            plt.ylabel('Temperature (°C)')
+            plt.title('Temperature Readings vs. Time')
+            plt.legend()
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            
+            # Save the plot to a BytesIO object
+            img = io.BytesIO()
+            plt.savefig(img, format='png')
+            img.seek(0)
+            plt.close()
+            
+            return send_file(img, mimetype='image/png', as_attachment=True, download_name='plot.png')
+        
+        except Exception as e:
+            return f"An error occurred: {e}", 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5500, debug=True)
