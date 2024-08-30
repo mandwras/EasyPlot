@@ -17,28 +17,37 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-        return "No file part", 400
+        return "No file part", 410
     
     file = request.files['file']
     
     if file.filename == '':
-        return "No selected file", 400
-    
-    if file:
+        return "No selected file", 420
+
+    if file and allowed_file(file.filename):
         try:
             # Read the file into a DataFrame
             df = pd.read_csv(file, encoding='latin1')
-            
-            # Print the first few rows of the DataFrame
-            # print(df.head())
-            # print(df.info())
-            
+
+            # Print the column names for debugging
+            print("Columns in the uploaded file:", df.columns)
+
+            # Check if required columns exist
+            required_columns = ['Time', 'Celsius(C)']
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                return f"Missing required columns: {', '.join(missing_columns)}", 400
+
             # Convert 'Celsius(C)' to numeric values
             df['Celsius(C)'] = pd.to_numeric(df['Celsius(C)'], errors='coerce')
             df['Time'] = pd.to_datetime(df['Time'], errors='coerce')
 
             # Drop rows with NaN values
             df = df.dropna()
+
+            # Check if there are still any rows to plot
+            if df.empty:
+                return "No valid data to plot after cleaning", 430
 
             # Check if the temperature is within the acceptable range
             df['Within Range'] = df['Celsius(C)'].between(lower_bound, upper_bound)
@@ -56,7 +65,6 @@ def upload_file():
             plt.xticks(rotation=45)
             plt.tight_layout()
             
-            # Save the plot to a BytesIO object
             img = io.BytesIO()
             plt.savefig(img, format='png')
             img.seek(0)
@@ -64,8 +72,20 @@ def upload_file():
             
             return send_file(img, mimetype='image/png', as_attachment=True, download_name='plot.png')
         
+        except pd.errors.EmptyDataError:
+            return "Uploaded file is empty", 440
+        except pd.errors.ParserError:
+            return "Error parsing the file. Ensure it is in CSV format", 450
         except Exception as e:
             return f"An error occurred: {e}", 500
+    else:
+        return "Invalid file type. Please upload a CSV file.", 460
+
+def allowed_file(filename):
+    """Check if the file extension is allowed(IF NEEDED ADD MORE EXT FOR NOW ONLY CSV TXT)."""
+    ALLOWED_EXTENSIONS = {'csv', 'txt'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5500, debug=True)
