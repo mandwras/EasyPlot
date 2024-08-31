@@ -49,3 +49,16 @@ html{
   font-size: 40px;
   margin-right: 10px;
 }
+
+
+.setTime{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  gap: 5px;
+}
+
+.endTime{
+  margin-top: 10px;
+}
