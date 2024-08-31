@@ -1,0 +1,51 @@
+.gen{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title{
+  font-size: 120px;
+  margin-bottom: 40px;
+}
+
+html{
+  background-color: rgb(226, 247, 247);
+}
+
+.upfile{
+  border: 0px ;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #4CAF50; 
+  color: white;
+  padding: 20px 20px;
+  font-size: 40px;
+  border: 1px black solid;
+}
+
+.file{
+  border-radius: 3px;
+}
+
+
+.file::-webkit-file-upload-button {
+  visibility: hidden;
+  display: none;
+}
+
+
+.file::before {
+  content: 'Choose file'; 
+  display: inline-block;
+  background: #4CAF50; 
+  color: white;
+  padding: 20px 20px;
+  outline: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px black solid;
+  border-radius: 5px;
+  font-size: 40px;
+  margin-right: 10px;
+}
