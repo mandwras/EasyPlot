@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    
-    <link rel="stylesheet" href="/src/static/styles.css">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EasyLog</title>
@@ -19,22 +15,18 @@
             <form action="/upload" method="post" enctype="multipart/form-data">
                 <input class="file" type="file" name="file">
                 <input class="upfile" type="submit" value="Upload">
-            </form>    
-        </div>
-        <div class="setTime">
-            <h1 class="timeTitle">Specify The Time Range</h1>
-            <div class="startTime">
-                <form action="/upload" method="post" enctype="multipart/form-data">
-                    <label for="start_time"></label>
-                    <input type="datetime-local" name="start_time" id="start_time">
-                </form>
-            </div>
-            <div class="endTime">
-                <form action="/upload" method="post" enctype="multipart/form-data">
-                    <label for="end_time"></label>
-                    <input type="datetime-local" name="end_time" id="end_time">
-                </form>
-            </div>
+                
+                <div class="setTime">
+                    <h1 class="timeTitle">Specify The Time Range</h1>
+                    <div class="startTime">
+                        <input type="datetime-local" name="start_time" id="start_time">
+                    </div>
+                    <div class="endTime">
+                        <input type="datetime-local" name="end_time" id="end_time">
+                    </div>
+                </div>
+                
+            </form>
         </div>
     </div>
 </body>

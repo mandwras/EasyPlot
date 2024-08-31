@@ -29,25 +29,30 @@ def upload_file():
             # Read the file into a DataFrame
             df = pd.read_csv(file, encoding='latin1')
 
-            # Print the column names for debugging
-            print("Columns in the uploaded file:", df.columns)
-
             # Check if required columns exist
             required_columns = ['Time', 'Celsius(C)']
             missing_columns = [col for col in required_columns if col not in df.columns]
             if missing_columns:
                 return f"Missing required columns: {', '.join(missing_columns)}", 400
 
-            # Convert 'Celsius(C)' to numeric values
+            # Convert 'Celsius(C)' to numeric values and 'Time' to datetime
             df['Celsius(C)'] = pd.to_numeric(df['Celsius(C)'], errors='coerce')
             df['Time'] = pd.to_datetime(df['Time'], errors='coerce')
 
             # Drop rows with NaN values
             df = df.dropna()
 
-            # Check if there are still any rows to plot
+            # Filter data based on the provided time range
+            start_time = request.form.get('start_time')
+            end_time = request.form.get('end_time')
+            
+            if start_time:
+                df = df[df['Time'] >= pd.to_datetime(start_time)]
+            if end_time:
+                df = df[df['Time'] <= pd.to_datetime(end_time)]
+
             if df.empty:
-                return "No valid data to plot after cleaning", 430
+                return "No data available for the selected time range.", 430
 
             # Check if the temperature is within the acceptable range
             df['Within Range'] = df['Celsius(C)'].between(lower_bound, upper_bound)
@@ -82,10 +87,9 @@ def upload_file():
         return "Invalid file type. Please upload a CSV file.", 460
 
 def allowed_file(filename):
-    """Check if the file extension is allowed(IF NEEDED ADD MORE EXT FOR NOW ONLY CSV TXT)."""
+    """Check if the file extension is allowed."""
     ALLOWED_EXTENSIONS = {'csv', 'txt'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5500, debug=True)
