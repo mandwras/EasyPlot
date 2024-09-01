@@ -10,22 +10,35 @@
 }
 
 html{
-  background-color: rgb(226, 247, 247);
+  background-color: #D1FAE5;
 }
 
 .upfile{
   border: 0px ;
-  border-radius: 8px;
+  border-radius: 500px;
   cursor: pointer;
-  background: #4CAF50; 
+  background: #047857; 
   color: white;
   padding: 20px 20px;
   font-size: 40px;
   border: 1px black solid;
+  letter-spacing: 1px;
+  transition: 0.1s;
+}
+
+
+.upfile:hover{
+  transform: scale(1.04);
+  transition: 0.1s;
 }
 
 .file{
   border-radius: 3px;
+  transition: 0.1s;
+}
+.file:hover{
+  transform: scale(1.04);
+  transition: 0.1s;
 }
 
 
@@ -38,16 +51,17 @@ html{
 .file::before {
   content: 'Choose file'; 
   display: inline-block;
-  background: #4CAF50; 
+  background: #047857; 
   color: white;
   padding: 20px 20px;
   outline: none;
   white-space: nowrap;
   cursor: pointer;
   border: 1px black solid;
-  border-radius: 5px;
+  border-radius: 500px;
   font-size: 40px;
   margin-right: 10px;
+  letter-spacing: 1px;
 }
 
 
@@ -61,4 +75,31 @@ html{
 
 .endTime{
   margin-top: 10px;
+}
+
+
+
+
+display: inline-block;
+outline: none;
+cursor: pointer;
+font-size: 14px;
+line-height: 1;
+border-radius: 500px;
+transition-property: background-color,border-color,color,box-shadow,filter;
+transition-duration: .3s;
+border: 1px solid transparent;
+letter-spacing: 2px;
+min-width: 160px;
+text-transform: uppercase;
+white-space: normal;
+font-weight: 700;
+text-align: center;
+padding: 17px 48px;
+color: #fff;
+background-color: #1ED760;
+height: 48px;
+:hover{
+    transform: scale(1.04);
+    background-color: #21e065;
 }
