@@ -10,15 +10,17 @@
 <body>
     <div class="gen">
         <div class="header">
-            <h1 class="title">Upload a CSV File</h1>
+            <h1 class="title">Εισαγωγή Αρχείου Καταγραφής</h1>
         </div>
         <div class="upload">
             <form action="/upload" method="post" enctype="multipart/form-data">
-                <input class="file" type="file" name="file">
-                <input class="upfile" type="submit" value="Upload">
+                <div class="file-upload-container">
+                    <input class="file" type="file" name="file">
+                    <input class="upfile" type="submit" value="Βήμα 3: Ανέβασε το Αρχείο">
+                </div>
                 
                 <div class="setTime">
-                    <h1 class="timeTitle">Specify The Time Range</h1>
+                    <h1 class="timeTitle">Βήμα 2 : Επέλεξε Χρονική Περίοδο</h1>
                     <div class="startTime">
                         <input type="datetime-local" name="start_time" id="start_time">
                     </div>
@@ -26,9 +28,8 @@
                         <input type="datetime-local" name="end_time" id="end_time">
                     </div>
                 </div>
-                
             </form>
         </div>
-    </div>
+    </div>    
 </body>
 </html>

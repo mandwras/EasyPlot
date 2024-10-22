@@ -1,57 +1,69 @@
-.gen{
+html {
+  background-color: #D1FAE5;
+}
+
+.gen {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.title{
-  font-size: 120px;
+.title {
+  font-size: 80px;
   margin-bottom: 40px;
+  text-align: center;
 }
 
-html{
-  background-color: #D1FAE5;
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Space between the buttons */
 }
 
-.upfile{
-  border: 0px ;
+.upfile, .file {
+  width: 300px; /* Ensures the buttons are the same width */
+}
+
+.upfile {
+  content: 'Βημα 3 Ανέβασε το Αρχείο';
+  border: 0px;
   border-radius: 500px;
   cursor: pointer;
-  background: #047857; 
+  background: #047857;
   color: white;
   padding: 20px 20px;
-  font-size: 40px;
+  font-size: 20px;
   border: 1px black solid;
   letter-spacing: 1px;
   transition: 0.1s;
+  text-align: center; /* Centers the text */
 }
 
-
-.upfile:hover{
+.upfile:hover {
   transform: scale(1.04);
   transition: 0.1s;
 }
 
-.file{
+.file {
   border-radius: 3px;
   transition: 0.1s;
 }
-.file:hover{
+
+.file:hover {
   transform: scale(1.04);
   transition: 0.1s;
 }
-
 
 .file::-webkit-file-upload-button {
   visibility: hidden;
   display: none;
 }
 
-
 .file::before {
-  content: 'Choose file'; 
-  display: inline-block;
-  background: #047857; 
+  content: 'Βήμα 1 Επέλεξε Αρχείο'; 
+  display: block;
+  background: #047857;
   color: white;
   padding: 20px 20px;
   outline: none;
@@ -59,22 +71,20 @@ html{
   cursor: pointer;
   border: 1px black solid;
   border-radius: 500px;
-  font-size: 40px;
+  font-size: 20px;
   margin-right: 10px;
   letter-spacing: 1px;
+  text-align: center; /* Centers the text */
 }
 
-
-.setTime{
+.setTime {
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   gap: 5px;
 }
 
-.endTime{
+.endTime {
   margin-top: 10px;
 }
-
-
