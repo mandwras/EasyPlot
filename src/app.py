@@ -35,6 +35,14 @@ def upload_file():
             if missing_columns:
                 return f"Missing required columns: {', '.join(missing_columns)}", 400
 
+            # Handle the Serial Number column if it's missing for subsequent rows
+            if 'Serial Number' in df.columns:
+                # Fill missing serial numbers with the first row's serial number
+                df['Serial Number'] = df['Serial Number'].fillna(df['Serial Number'].iloc[0])
+            else:
+                # If there's no 'Serial Number' column, create it based on the first row
+                df['Serial Number'] = df.iloc[0, -1]  # Assuming the serial number is in the last column
+
             # Convert 'Celsius(C)' to numeric values and 'Time' to datetime
             df['Celsius(C)'] = pd.to_numeric(df['Celsius(C)'], errors='coerce')
             df['Time'] = pd.to_datetime(df['Time'], errors='coerce')

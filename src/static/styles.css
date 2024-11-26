@@ -18,11 +18,11 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Space between the buttons */
+  gap: 20px; 
 }
 
-.upfile, .file {
-  width: 300px; /* Ensures the buttons are the same width */
+.upfile, .file, .setTime input {
+  width: 300px; 
 }
 
 .upfile {
@@ -37,7 +37,8 @@ html {
   border: 1px black solid;
   letter-spacing: 1px;
   transition: 0.1s;
-  text-align: center; /* Centers the text */
+  text-align: center;
+  margin-top: 30px;
 }
 
 .upfile:hover {
@@ -74,7 +75,7 @@ html {
   font-size: 20px;
   margin-right: 10px;
   letter-spacing: 1px;
-  text-align: center; /* Centers the text */
+  text-align: center;
 }
 
 .setTime {
@@ -82,9 +83,22 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
-.endTime {
+.setTime label {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.setTime input {
+  padding: 10px;
+  font-size: 16px;
+}
+
+.endTime, .startTime {
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
