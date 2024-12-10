@@ -37,4 +37,3 @@ Missing Columns   --> Returns a 400 error
 Empty File        --> Returns a 440 error
 Parsing Errors    --> Returns a 450 error
 -
--
